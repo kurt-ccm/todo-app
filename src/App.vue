@@ -6,7 +6,7 @@ import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faAngleUp);
-library.add(faAngleDown)
+library.add(faAngleDown);
 
 const apiURL = 'https://calm-plum-jaguar-tutu.cyclic.app/todos';
 
