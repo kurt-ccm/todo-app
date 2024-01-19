@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import router from './router';
+
 // import { computed, onMounted, ref } from 'vue';
 // import axios from 'axios';
 
@@ -11,10 +13,11 @@
 
 
 
-function submitForm(e:string,r:boolean) {
-  console.log(e,r);
+// function submitForm(e:string,r:boolean) {
+//   console.log(e,r);
+//   router.replace('/');
   
-}
+// }
 
 
 
@@ -22,9 +25,7 @@ function submitForm(e:string,r:boolean) {
 
 <template>
   <div id="main">
-    <h2>Hello! Welcome to your todo site.</h2>
-    <router-link to="/input">Create a new todo</router-link>
-    <router-view @handleFormSubmit="submitForm"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 

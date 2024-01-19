@@ -47,17 +47,7 @@ async function getCall() {
     }
 }
 
-// async function postCall() {
-//     try {
-//         const postArgs = { todoName: newTodoName.value, isComplete: newTodoCompleted.value }
-//         const { data } = await axios.post(apiURL, postArgs)
-//         getCall();
-//         formIsVisible.value = false;
-//         return data;
-//     } catch (error) {
-//         throw error
-//     }
-// }
+
 
 async function deleteCall(id: string) {
     try {
@@ -135,12 +125,14 @@ function reset() {
 }
 
 onMounted(() => {
-  getCall();
+    getCall();
 })
 </script>
 
 <template>
     <div>
+        <h2>Hello! Welcome to your todo site.</h2>
+        <router-link to="/input">Create a new todo</router-link>
         <div>
             <div>
                 <button id="reset-button" @click="reset">Reset</button>
@@ -181,35 +173,35 @@ onMounted(() => {
 
 <style scoped>
 #main {
-  width: 85%;
-  margin: auto;
-  text-align: center;
+    width: 85%;
+    margin: auto;
+    text-align: center;
 }
 
 table {
-  border: solid 2px black;
+    border: solid 2px black;
 }
 
 .completed {
-  background-color: green;
+    background-color: green;
 }
 
 .not-completed {
-  background-color: red;
+    background-color: red;
 }
 
 th {
-  border: solid 2px rgb(48, 48, 188);
+    border: solid 2px rgb(48, 48, 188);
 }
 
 button {
-  width: fit-content;
-  height: auto;
-  background-color: lightblue;
-  margin: 2px;
+    width: fit-content;
+    height: auto;
+    background-color: lightblue;
+    margin: 2px;
 }
 
 #reset-button {
-  background-color: rgb(229, 119, 119);
+    background-color: rgb(229, 119, 119);
 }
 </style>
