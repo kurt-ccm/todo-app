@@ -190,7 +190,7 @@ onMounted(() => {
         <th>Complete</th>
         <th>Actions</th>
       </tr>
-      <tr v-for="data in displayedData" :key="data._id">``
+      <tr v-for="data in displayedData" :key="data._id">
         <th>{{ data.todoName }}</th>
         <th :class="data.isComplete ? 'completed' : 'not-completed'">{{ data.isComplete }}</th>
         <th>
