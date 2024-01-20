@@ -6,7 +6,7 @@ import TodoDetails from './pages/TodoDetails.vue'
 const routes = [
     {path: '/', component: HomePage},
     {path: '/input', component: TodoInputForm},
-    {path: '/details/:id', component: TodoDetails}
+    {path: '/details/:id', name: 'details', component: TodoDetails, props: true}
 ]
 
 const router = createRouter({ history: createWebHistory(), routes});

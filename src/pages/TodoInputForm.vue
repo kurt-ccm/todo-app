@@ -6,13 +6,12 @@ import useVuelidate from '@vuelidate/core';
 
 import { required, helpers } from '@vuelidate/validators';
 import { Todo } from '../helpers/types';
+import { apiURL } from '../helpers/apiURL';
 
 const newTodo: Ref<Todo> = ref({
     todoName: '',
     isComplete: false
 })
-
-const apiURL = 'https://calm-plum-jaguar-tutu.cyclic.app/todos';
 
 const hasSpaces = (value: string) => /^[a-z\s]+$/i.test(value.trim())
 const includesVue = (value: string) => value.trim().toLowerCase().includes('vue')

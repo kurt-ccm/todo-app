@@ -42,6 +42,8 @@ async function getCall() {
         todoData.value = data.data
         displayedData.value = todoData.value;
         dataIsLoaded.value = true;
+        console.log(displayedData.value[0]);
+        
     } catch (error) {
         throw error
     }
@@ -162,7 +164,7 @@ onMounted(() => {
                 <th>{{ data.todoName }}</th>
                 <th :class="data.isComplete ? 'completed' : 'not-completed'">{{ data.isComplete }}</th>
                 <th>
-                    <router-link to="/details/{{ data._id }}">View details</router-link>
+                    <router-link :to="{ name: 'details', params: { id: data._id }}">View details</router-link>
                     <button @click="handleUpdate(data._id, data.isComplete)">{{ !data.isComplete ? 'Mark completed' : 'Mark as in progress'}}</button>
                     <button @click="handleDelete(data._id)">Delete</button>
                 </th>
