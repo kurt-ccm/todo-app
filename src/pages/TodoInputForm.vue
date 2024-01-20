@@ -4,7 +4,7 @@ import { Ref, ref } from 'vue';
 import router from '../router';
 import useVuelidate from '@vuelidate/core';
 
-import { alphaNum, required } from '@vuelidate/validators';
+import { required, helpers } from '@vuelidate/validators';
 import { Todo } from '../helpers/types';
 
 const newTodo: Ref<Todo> = ref({
@@ -12,17 +12,15 @@ const newTodo: Ref<Todo> = ref({
     isComplete: false
 })
 
-const newTodoName = ref('');
-const newTodoCompleted = ref(true);
-
 const apiURL = 'https://calm-plum-jaguar-tutu.cyclic.app/todos';
 
-const hasSpaces = (value: string) => /^[\w\-\s]+$/.test(value.trim())
+const hasSpaces = (value: string) => /^[a-z\s]+$/i.test(value.trim())
+const includesVue = (value: string) => value.trim().toLowerCase().includes('vue')
 const rules = {
     todoName: {
         required,
-        // alphaNum,
-        hasSpaces: hasSpaces
+        hasSpaces: helpers.withMessage('Only letters and spaces', hasSpaces),
+        includesVue: helpers.withMessage('Must contain the word "vue" please!', includesVue)
     }
 }
 
@@ -54,7 +52,12 @@ async function postCall() {
 <template>
     <form @submit.prevent="postCall">
         <label for="newTodoName">Name of your todo?</label>
-        <input type="text" v-model="newTodo.todoName">
+        <input type="text" v-model="newTodo.todoName" @blur="vuelidate.todoName.$touch">
+        <span 
+            v-if="vuelidate.todoName.$error" 
+            class="red-text">
+            {{ vuelidate.todoName.$errors[0]?.$message }}
+        </span>
         <input type="checkbox" id="completed" v-model="newTodo.isComplete">
         <label for="completed">Completed?</label>
         <button>Submit!</button>
@@ -66,5 +69,9 @@ form {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+}
+
+.red-text {
+    color: red;
 }
 </style>
