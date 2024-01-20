@@ -1,29 +1,10 @@
 <script setup lang="ts">
-// import router from './router';
-
-// import { computed, onMounted, ref } from 'vue';
-// import axios from 'axios';
-
-
-// import {Todo} from './helpers/types'
-
-
-
-
-
-
-
-// function submitForm(e:string,r:boolean) {
-//   console.log(e,r);
-//   router.replace('/');
-  
-// }
-
-
+import TheHeader from './components/TheHeader.vue'
 
 </script>
 
 <template>
+  <the-header></the-header>
   <div id="main">
     <router-view></router-view>
   </div>
@@ -31,7 +12,7 @@
 
 <style scoped>
 #main {
-  width: 85%;
+  width: 60%;
   margin: auto;
   text-align: center;
 }

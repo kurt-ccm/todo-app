@@ -13,5 +13,6 @@ div {
     box-shadow: 5px 5px 2px lightblue;
     padding: 5px;
     /* width: fit-content; */
+    margin: 5px;
 }
 </style>

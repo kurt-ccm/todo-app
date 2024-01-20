@@ -4,24 +4,19 @@ import { Ref, ref } from 'vue';
 import router from '../router';
 import useVuelidate from '@vuelidate/core';
 
-import { required, helpers } from '@vuelidate/validators';
 import { Todo } from '../helpers/types';
 import { apiURL } from '../helpers/apiURL';
+
+import { rules } from '../helpers/rules';
 
 const newTodo: Ref<Todo> = ref({
     todoName: '',
     isComplete: false
 })
 
-const hasSpaces = (value: string) => /^[a-z\s]+$/i.test(value.trim())
-const includesVue = (value: string) => value.trim().toLowerCase().includes('vue')
-const rules = {
-    todoName: {
-        required,
-        hasSpaces: helpers.withMessage('Only letters and spaces', hasSpaces),
-        includesVue: helpers.withMessage('Must contain the word "vue" please!', includesVue)
-    }
-}
+// const hasSpaces = (value: string) => /^[a-z\s]+$/i.test(value.trim())
+// const includesVue = (value: string) => value.trim().toLowerCase().includes('vue')
+
 
 const vuelidate = useVuelidate(rules, newTodo);
 
@@ -31,8 +26,6 @@ async function postCall() {
         vuelidate.value.$touch()
         if (vuelidate.value.$invalid) {
             console.log(vuelidate.value.$errors);
-
-            alert('hey thats not cool')
             return
         }
 

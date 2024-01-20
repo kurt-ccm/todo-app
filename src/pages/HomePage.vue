@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 import axios from 'axios';
 import { ref, computed, onMounted } from 'vue';
 import { Todo } from '../helpers/types';
@@ -18,7 +19,7 @@ const dataIsLoaded = ref(false);
 
 
 const searchParam = ref('');
-
+const searchIsVisible = ref(false);
 const displayedData = ref();
 
 
@@ -103,6 +104,8 @@ function filterData() {
 
 function refreshData() {
     displayedData.value = todoData.value;
+    searchParam.value = '';
+    searchIsVisible.value = false;
 }
 
 onMounted(() => {
@@ -111,48 +114,49 @@ onMounted(() => {
 </script>
 
 <template>
-    <base-card>
-        <div id="home-page">
-            <h2>Hello! Welcome to your todo site.</h2>
-            <base-button><router-link to="/input">Create a new todo</router-link></base-button>
+    <div id="home-page">
+        <base-card style="margin-bottom: 15px;">
             <div>
-                <div>
-                    <base-button @click="refreshData">Refresh</base-button>
-                </div>
-
+                <base-button @click="refreshData">Refresh</base-button>
+                <base-button><router-link to="/input">Create a new todo</router-link></base-button>
                 <base-button @click="filter(true)">Only show completed todos</base-button>
                 <base-button @click="filter(false)">Only show non-completed todos</base-button>
             </div>
 
             <div>
-                <input type="text" v-model="searchParam" placeholder="Search here...">
-                <button @click="filterData">Search!</button>
+                <base-button @click="searchIsVisible = true" v-if="!searchIsVisible">Search by text?</base-button>
+                <div v-else>
+                    <input type="text" v-model="searchParam" placeholder="Search here...">
+                    <button @click="filterData">Search!</button>
+                </div>
             </div>
-            <table v-if="dataIsLoaded && todoData">
-                <tr>
-                    <th>Title
+        </base-card>
 
-                        <base-button @click="toggleAscending"><font-awesome-icon
-                                :icon="['fas', 'angle-up']"></font-awesome-icon></base-button>
-                        <base-button @click="toggleDescending"><font-awesome-icon
-                                :icon="['fas', 'angle-down']"></font-awesome-icon></base-button>
-                    </th>
-                    <th>Complete</th>
-                    <th>Actions</th>
-                </tr>
-                <tr v-for="data in displayedData" :key="data._id">
-                    <th>{{ data.todoName }}</th>
-                    <th :class="data.isComplete ? 'completed' : 'not-completed'">{{ data.isComplete }}</th>
-                    <th>
-                        <base-button><router-link :to="{ name: 'details', params: { id: data._id } }">View details</router-link></base-button>
-                        <base-button @click="handleDelete(data._id)"><font-awesome-icon
-                                :icon="['fas', 'trash-can']" /></base-button>
-                    </th>
-                </tr>
-            </table>
-            <h3 v-else>No data is available. Try creating a todo!</h3>
-        </div>
-    </base-card>
+
+        <table v-if="dataIsLoaded && displayedData.length">
+            <tr>
+                <th>Title
+                    <base-button @click="toggleAscending"><font-awesome-icon
+                            :icon="['fas', 'angle-up']"></font-awesome-icon></base-button>
+                    <base-button @click="toggleDescending"><font-awesome-icon
+                            :icon="['fas', 'angle-down']"></font-awesome-icon></base-button>
+                </th>
+                <th>Complete</th>
+                <th>Actions</th>
+            </tr>
+            <tr v-for="data in displayedData" :key="data._id">
+                <th>{{ data.todoName }}</th>
+                <th :class="data.isComplete ? 'completed' : 'not-completed'">{{ data.isComplete }}</th>
+                <th>
+                    <base-button><router-link :to="{ name: 'details', params: { id: data._id } }">View
+                            details</router-link></base-button>
+                    <base-button @click="handleDelete(data._id)"><font-awesome-icon
+                            :icon="['fas', 'trash-can']" /></base-button>
+                </th>
+            </tr>
+        </table>
+        <h3 v-else>No data is available. Try creating a todo!</h3>
+    </div>
 </template>
 
 <style scoped>
@@ -166,6 +170,8 @@ onMounted(() => {
 
 table {
     border: solid 2px black;
+    width: 90%;
+    align-self: center;
 }
 
 #home-page {
@@ -182,7 +188,7 @@ table {
 }
 
 th {
-    border: solid 2px rgb(48, 48, 188);
+    border: solid 1px rgb(48, 48, 188);
 }
 
 button {
