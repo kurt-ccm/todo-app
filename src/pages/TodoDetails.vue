@@ -28,7 +28,7 @@ const getCallById = async () => {
 const putCall = async () => {
     const { data } = await axios.delete(`${apiURL}/${props.id}`);
     console.log(data);
-    
+
     if (data.code === 200) {
         const postArgs = { todoName: singleTodo.value.todoName.trim(), isComplete: singleTodo.value.isComplete }
         console.log('post arguments', postArgs);
@@ -44,14 +44,21 @@ onMounted(() => {
 </script>
 
 <template>
-    <h2>Details for todo with id {{ props.id }}:</h2>
-    <form v-if="dataIsLoaded" disabled>
-        <button v-if="!dataIsEditable" @click.prevent="dataIsEditable = !dataIsEditable">Edit todo</button>
-        <input v-model="singleTodo.todoName" :disabled="!dataIsEditable"/>
-        <input id="isComplete" type="checkbox" v-model="singleTodo.isComplete" :disabled="!dataIsEditable">
-        <label for="isComplete">Todo completed</label>
-        <button v-if="dataIsEditable" @click.prevent="putCall">Submit changes!</button>
-    </form>
-    <p v-else>Data is loading...</p>
-    <router-link to="/"><button>Home</button></router-link>
+    <base-card>
+
+        <div>
+            <h2>Details for todo with id {{ props.id }}:</h2>
+            <form v-if="dataIsLoaded" disabled>
+                <base-button v-if="!dataIsEditable" @click.prevent="dataIsEditable = !dataIsEditable">Edit
+                    todo</base-button>
+                <input v-model="singleTodo.todoName" :disabled="!dataIsEditable" />
+                <input id="isComplete" type="checkbox" v-model="singleTodo.isComplete" :disabled="!dataIsEditable">
+                <label for="isComplete">Todo completed</label>
+                <base-button v-if="dataIsEditable" @click.prevent="putCall">Submit changes!</base-button>
+            </form>
+            <p v-else>Data is loading...</p>
+            <router-link to="/"><base-button>Home</base-button></router-link>
+        </div>
+
+    </base-card>
 </template>
