@@ -162,6 +162,7 @@ onMounted(() => {
                 <th>{{ data.todoName }}</th>
                 <th :class="data.isComplete ? 'completed' : 'not-completed'">{{ data.isComplete }}</th>
                 <th>
+                    <router-link to="/details/{{ data._id }}">View details</router-link>
                     <button @click="handleUpdate(data._id, data.isComplete)">{{ !data.isComplete ? 'Mark completed' : 'Mark as in progress'}}</button>
                     <button @click="handleDelete(data._id)">Delete</button>
                 </th>
