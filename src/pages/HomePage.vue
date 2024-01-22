@@ -7,8 +7,8 @@ import { Todo } from '../helpers/types';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faAngleUp, faAngleDown, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { apiURL } from '../helpers/apiURL';
 
-const apiURL = 'https://calm-plum-jaguar-tutu.cyclic.app/todos';
 
 library.add(faAngleUp);
 library.add(faAngleDown);

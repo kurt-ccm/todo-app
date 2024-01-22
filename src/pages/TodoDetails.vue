@@ -80,7 +80,7 @@ onMounted(() => {
 
                 <base-button v-if="!dataIsEditable" @click.prevent="dataIsEditable = !dataIsEditable">Edit
                     todo</base-button>
-                <base-button v-else @click.prevent="putCall">Submit changes!</base-button>
+                <base-button v-else @click.prevent="putCall" :disabled="vuelidate.$errors.length != 0">Submit changes!</base-button>
             </form>
             <p v-else>Data is loading...</p>
             <router-link to="/"><base-button>Home</base-button></router-link>

@@ -51,7 +51,7 @@ async function postCall() {
                 {{ vuelidate.todoName.$errors[0]?.$message }}
             </span>
             <label for="completed">Completed?<input type="checkbox" id="completed" v-model="newTodo.isComplete"></label>
-            <base-button>Submit!</base-button>
+            <base-button :disabled="vuelidate.$errors.length > 0">Submit!</base-button>
             <base-button><router-link to="/">Home</router-link></base-button>
         </form>
     </base-card>
