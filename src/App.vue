@@ -16,10 +16,10 @@ type Todo = {
   createdAt?: string,
   updatedAt?: string,
   __v?: number,
-  _id?: string
+  _id: string
 }
 
-const todoData = ref();
+const todoData = ref<Todo[]>([]);
 const dataIsLoaded = ref(false);
 const formIsVisible = ref(false);
 
@@ -27,7 +27,7 @@ const newTodoName = ref('');
 const newTodoCompleted = ref(true);
 const searchParam = ref('');
 
-const displayedData = ref();
+const displayedData = ref<Todo[]>([]);
 
 
 function toggleShowForm() {
@@ -44,11 +44,6 @@ async function handleDelete(id: string) {
   await deleteCall(id);
   dataIsLoaded.value = false;
   getCall();
-}
-
-function handleUpdate(id: string, isComplete: boolean) {
-  const data = updateCall(id, isComplete);
-  return data
 }
 
 async function getCall() {
@@ -96,29 +91,12 @@ async function updateCall(id: string, isComplete: boolean) {
   }
 }
 
-const todosAscending = computed(() => {
-  return displayedData.value.sort((a: Todo, b: Todo) => {
-    if (a.todoName < b.todoName) {
-      return -1;
-    }
-    if (a.todoName > b.todoName) {
-      return 1;
-    }
-    return 0;
-  })
-})
 
-const todosDescending = computed(() => {
-  return displayedData.value.sort((a: Todo, b: Todo) => {
-    if (a.todoName < b.todoName) {
-      return 1;
-    }
-    if (a.todoName > b.todoName) {
-      return -1;
-    }
-    return 0;
-  })
-})
+const todosAscending = computed(() => 
+  displayedData.value.sort((a: Todo, b: Todo) => a.todoName.localeCompare(b.todoName)))
+
+const todosDescending = computed(() => 
+  displayedData.value.sort((a: Todo, b: Todo) => b.todoName.localeCompare(a.todoName)))
 
 function filter(complete: boolean) {
   displayedData.value = todoData.value.filter((todo: Todo) => {
@@ -194,7 +172,7 @@ onMounted(() => {
         <th>{{ data.todoName }}</th>
         <th :class="data.isComplete ? 'completed' : 'not-completed'">{{ data.isComplete }}</th>
         <th>
-          <button @click="handleUpdate(data._id, data.isComplete)">{{ !data.isComplete ? 'Mark completed' : 'Mark as in progress'}}</button>
+          <button @click="updateCall(data._id, data.isComplete)">{{ !data.isComplete ? 'Mark completed' : 'Mark as in progress'}}</button>
           <button @click="handleDelete(data._id)">Delete</button>
         </th>
       </tr>
