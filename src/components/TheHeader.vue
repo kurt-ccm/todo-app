@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h2>Welcome to the todo page</h2>
+        <h2 data-test="h2-test">Welcome to the todo page</h2>
     </header>
 </template>
 
